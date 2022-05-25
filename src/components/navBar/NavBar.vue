@@ -11,6 +11,15 @@
           >{{ item.itmeName }}</router-link
         >
       </div>
+      <div class="nav_menu" v-if="!isUserConnected">
+        <router-link
+          v-for="item in navMenuListNormal"
+          :key="item.id"
+          :to="item.path"
+          @click.native="isOpenMenu = !isOpenMenu"
+          >{{ item.itmeName }}</router-link
+        >
+      </div>
       <el-button type="danger" v-if="!isUserConnected" @click="connectWeb3Modal">Connect your wallet</el-button>
       <el-button type="danger" v-if="isUserConnected" @click="disconnectWeb3Modal">Disconnect {{getActiveAccount.substring(0, 6)}}...{{getActiveAccount.substring(getActiveAccount.length-4, getActiveAccount.length)}}</el-button>
       <div class="burger" @click="isOpenMenu = !isOpenMenu">
@@ -30,6 +39,10 @@ export default {
       navMenuList: [
         { id: '001', path: '/home', itmeName: 'Home' },
         { id: '002', path: '/trade', itmeName: 'Trade' },
+        { id: '003', path: '/whitePaper', itmeName: 'WhitePaper' },
+      ],
+      navMenuListNormal: [
+        { id: '001', path: '/home', itmeName: 'Home' },
         { id: '003', path: '/whitePaper', itmeName: 'WhitePaper' },
       ],
       isOpenMenu: false, 

@@ -6,7 +6,7 @@
         RateX is a decentralized interest rate swap (IRS) product that offers synthetic exposure to interest rates, supporting up to 40x leverage trading.
     </div>
     <div style="margin-top:60px;">
-        <el-button type="danger" v-if="isUserConnected">Get Started</el-button>
+        <el-button type="danger" v-if="isUserConnected" @click="toTrade">Get Started</el-button>
     </div>
   </div>
 </template>
@@ -21,6 +21,9 @@ export default {
   },
     methods: {
     ...mapActions("accounts", ["connectWeb3Modal", "disconnectWeb3Modal"]),
+    toTrade() {
+      this.$router.push('/trade');
+    }
   }
 };
 </script>
