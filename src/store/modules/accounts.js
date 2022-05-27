@@ -2,6 +2,7 @@ import Web3Modal from "web3modal";
 import Web3 from "web3";
 // import BurnerConnectProvider from "@burner-wallet/burner-connect-provider";
 // import Authereum from "authereum";
+import Config from "@/config/config.json";
 
 const state = {
   activeAccount: null,
@@ -13,9 +14,16 @@ const state = {
   providerW3m: null, // this is "provider" from Web3Modal
   web3Modal: null,
   provider:null,
+  contractAddress:{
+    BasePool: "",
+    PositionManager:""
+  }
 };
 
 const getters = {
+  getContractAddress(state) {
+    return state.contractAddress;
+  },
   getActiveAccount(state) {
     if (!state.activeAccount) {
       return window.ethereum.selectedAddress;
@@ -171,6 +179,15 @@ const mutations = {
         break;
       case "0x13881":
         state.chainName = "Polygon mumbai";
+        state.contractAddress.BasePool = Config.Polygon.BasePool
+        state.contractAddress.PositionManager = Config.Polygon.PositionManager
+        state.contractAddress.MockERC20 = Config.Polygon.MockERC20
+        break;
+      case "0x61":
+        state.chainName = "Binance Smart Chain Testnet";
+        state.contractAddress.BasePool = Config.BSC.BasePool
+        state.contractAddress.PositionManager = Config.BSC.PositionManager
+        state.contractAddress.MockERC20 = Config.BSC.MockERC20
         break;
       case "0x539": // 1337 (often used on localhost)
       case "0x1691": // 5777 (default in Ganache)

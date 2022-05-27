@@ -1,0 +1,491 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_pool_address",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "LiquidateUpdate",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "old_amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "new_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "MarginUpdate",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "notional_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "margin_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "swap_rate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "is_fixed_receiver",
+				"type": "bool"
+			}
+		],
+		"name": "AddPosition",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "notional_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "margin_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "swap_rate",
+				"type": "uint256"
+			}
+		],
+		"name": "AddPositionData",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "CalculateNotionalAndRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "CalculatePnL",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "PnL",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "ClosePosition",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "margin_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "DecreaseMargin",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "old_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "new_amount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "ExistLiquidablePosition",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "GetPositionHealthFactor",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "factor",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "GetPositionInfo",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "margin_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "num_data",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "is_fixed_receiver",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "is_liquidable",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "data_id",
+				"type": "uint256"
+			}
+		],
+		"name": "GetPositionTimeData",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "notional_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "trading_time",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "swap_rate",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "GetTraderPosition",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "swap_rate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "notional_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "margin_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "is_fixed_receiver",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "is_liquidable",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "health_factor",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			}
+		],
+		"name": "GetTraderPositionNumber",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "margin_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "IncreaseMargin",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "old_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "new_amount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "LiquidateAllPosition",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "PRICE_PRECISION",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "RATE_PRECISION",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "position_id",
+				"type": "uint256"
+			}
+		],
+		"name": "RedeemMargin",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "margin_amount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "num_positions",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

@@ -1,3 +1,12 @@
 {
-    "ContractAddress":""
+    "Polygon": {
+        "BasePool": "",
+        "PositionManager":"",
+        "MockERC20":""
+    },
+    "BSC": {
+        "BasePool": "",
+        "PositionManager":"",
+        "MockERC20":""
+    }
 }
