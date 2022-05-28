@@ -148,8 +148,8 @@ const mutations = {
     }
     state.providerW3m = null;
     await state.web3Modal.clearCachedProvider();
-
-    window.location.href = '../'; // redirect to the Main page
+    this.$router.push('/home');
+    // window.location.href = '../RateX-interface/#/home'; // redirect to the Main page
   },
   setActiveAccount(state, selectedAddress) {
     state.activeAccount = selectedAddress;

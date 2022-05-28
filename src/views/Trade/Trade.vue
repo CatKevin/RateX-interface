@@ -89,6 +89,9 @@
     >
       <div style="padding-top: 20px;padding-bottom: 20px;font-size: 24px;font-weight: 600;">My LimitOrder</div>
       <el-table :data="LimitOrder" style="width: 100%;padding-left:30px;padding-right:30px;padding-top:10px;padding-bottom:20px;">
+        <template slot="empty">
+          <el-empty :image-size="50" description='No Data'></el-empty>
+        </template>
         <el-table-column label="Type" width="90">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.is_fixed_receiver" type="success">Long</el-tag>
@@ -146,6 +149,9 @@
     >
       <div style="padding-top: 20px;padding-bottom: 20px;font-size: 24px;font-weight: 600;">My Position</div>
       <el-table :data="MyPositions" style="width: 100%;padding-left:30px;padding-right:30px;padding-top:10px;padding-bottom:20px;">
+        <template slot="empty">
+          <el-empty :image-size="50" description='No Data'></el-empty>
+        </template>
         <el-table-column label="Type" width="70">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.is_fixed_receiver" type="success">Long</el-tag>
