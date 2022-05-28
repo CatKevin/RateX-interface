@@ -525,6 +525,67 @@
 				"internalType": "struct BasePool.Order",
 				"name": "",
 				"type": "tuple"
+			},
+			{
+				"internalType": "bool",
+				"name": "is_fixed_receiver",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			}
+		],
+		"name": "GetTraderOrderList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "trader_address",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "swap_rate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "notional_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "margin_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "position_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "is_position",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct BasePool.Order[]",
+				"name": "",
+				"type": "tuple[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "",
+				"type": "bool[]"
 			}
 		],
 		"stateMutability": "view",
@@ -544,6 +605,67 @@
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trader_address",
+				"type": "address"
+			}
+		],
+		"name": "GetTraderPositionList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "idx",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "swap_rate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "notional_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "margin_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "is_fixed_receiver",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "is_liquidable",
+						"type": "bool"
+					},
+					{
+						"internalType": "int256",
+						"name": "PnL",
+						"type": "int256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "health_factor",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct IPositionManager.TraderPosition[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

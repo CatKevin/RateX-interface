@@ -1,8 +1,8 @@
 {
     "Polygon": {
-        "BasePool": "",
-        "PositionManager":"",
-        "MockERC20":""
+        "BasePool": "0xAFE5A7865AF8FF270eB75F61D1f8e34abdd0CaE7",
+        "PositionManager":"0x04375eaa3ebB9D7e363441a8075b808D2953bB5b",
+        "MockERC20":"0x41540a028E9E4363caA55C20049c61156F2f65C5"
     },
     "BSC": {
         "BasePool": "",

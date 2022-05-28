@@ -88,7 +88,7 @@
       "
     >
       <div style="padding-top: 20px;padding-bottom: 20px;font-size: 24px;font-weight: 600;">My LimitOrder</div>
-      <el-table :data="MyPositions" style="width: 100%;padding-left:30px;padding-right:30px;padding-top:10px;padding-bottom:20px;">
+      <el-table :data="LimitOrder" style="width: 100%;padding-left:30px;padding-right:30px;padding-top:10px;padding-bottom:20px;">
         <el-table-column label="Type" width="90">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.is_fixed_receiver" type="success">Long</el-tag>
@@ -252,6 +252,7 @@ export default {
         longFlag: 0, // 0=long;1=short
         swapType: 0, // 0=market;1=Limit
       },
+      LimitOrder:[],
       MyPositions: [{
         position_id:1,
         swap_rate: 10000,
@@ -308,8 +309,8 @@ export default {
       "getContractAddress",
     ]),
   },
-  created: {
-
+  created() {
+     this.getAllData()
   },
   methods: {
     handleEdit(index, row) {
@@ -321,6 +322,8 @@ export default {
     ...mapActions("accounts", ["connectWeb3Modal", "disconnectWeb3Modal"]),
     async getAllData() {
       await this.getBalance();
+      await this.GetTraderOrderList();
+      await this.GetTraderPositionList();
     },
     async getBalance(){
       const my = this;
@@ -328,6 +331,7 @@ export default {
       const ActiveAccount = this.$store.getters["accounts/getActiveAccount"];
       const contractAddress =
         this.$store.getters["accounts/getContractAddress"];
+        console.log(contractAddress.MockERC20)
       try {
         const MockERC20Contract = new web3.eth.Contract(
           MockERC20ABI,
@@ -335,7 +339,7 @@ export default {
         );
         if (MockERC20Contract) {
           let myBalance = await MockERC20Contract.methods.balanceOf(ActiveAccount).call()
-          my.yourBalane = myBalance;
+          my.yourBalane = myBalance/10**18;
         }
       } catch (error) {
         console.log(error);
@@ -343,7 +347,91 @@ export default {
         my.sendErrorMsg(my, "Error: Something Wrong!");
       }
     },
-    faucetToken(){
+    async GetTraderOrderList(){
+      const my = this;
+      const web3 = this.$store.getters["accounts/getWeb3"];
+      const ActiveAccount = this.$store.getters["accounts/getActiveAccount"];
+      const contractAddress =
+        this.$store.getters["accounts/getContractAddress"];
+      try {
+        const BasePoolContract = new web3.eth.Contract(
+          BasePoolABI,
+          contractAddress.BasePool
+        );
+        if (BasePoolContract) {
+          let account = ActiveAccount
+          // let account = "0x7A55229DBC2A1ff9B64B5A54dbf1A10Ab9EF0DF3"
+          let res = await BasePoolContract.methods.GetTraderOrderList(account).call({
+            from: ActiveAccount,
+          })
+          console.log(res[0])
+          console.log(res[1])
+          my.LimitOrder = []
+          for(let i=0;i<res[0].length;i++){
+            let item = {
+              position_id:res[0][i].position_id,
+              swap_rate: res[0][i].swap_rate,
+              notional_amount: res[0][i].notional_amount,
+              margin_amount: res[0][i].margin_amount,
+              is_fixed_receiver: res[1][i],
+              is_liquidable: res[0][i].is_position,
+              health_factor: 20000000,
+              start_time: 1653699519,
+              end_time: 1656291519,
+              new_margin_amount:0,
+            }
+            my.LimitOrder.push(item)
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        // alert("Error:Transaction failed!");
+        my.sendErrorMsg(my, "Error: Something Wrong!");
+      }
+    },
+    async GetTraderPositionList(){
+      const my = this;
+      const web3 = this.$store.getters["accounts/getWeb3"];
+      const ActiveAccount = this.$store.getters["accounts/getActiveAccount"];
+      const contractAddress =
+        this.$store.getters["accounts/getContractAddress"];
+      try {
+        const BasePoolContract = new web3.eth.Contract(
+          BasePoolABI,
+          contractAddress.BasePool
+        );
+        if (BasePoolContract) {
+          let account = ActiveAccount
+          // let account = "0x7A55229DBC2A1ff9B64B5A54dbf1A10Ab9EF0DF3"
+          let res = await BasePoolContract.methods.GetTraderPositionList(account).call({
+            from: ActiveAccount,
+          })
+          console.log(res)
+          my.MyPositions = []
+          for(let i=0;i<res.length;i++){
+            let item = {
+              position_id:res[i].idx,
+              swap_rate: parseInt(res[i].swap_rate),
+              notional_amount: parseInt(res[i].notional_amount),
+              margin_amount: parseInt(res[i].margin_amount),
+              is_fixed_receiver: res[i].is_fixed_receiver,
+              is_liquidable: res[i].is_liquidable,
+              health_factor: parseInt(res[i].health_factor),
+              start_time: 1653699519,
+              end_time: 1656291519,
+              new_margin_amount:0,
+            }
+            my.MyPositions.push(item)
+          }
+          console.log(my.MyPositions)
+        }
+      } catch (error) {
+        console.log(error);
+        // alert("Error:Transaction failed!");
+        my.sendErrorMsg(my, "Error: Something Wrong!");
+      }
+    },
+    async faucetToken(){
       const my = this;
       const web3 = this.$store.getters["accounts/getWeb3"];
       const ActiveAccount = this.$store.getters["accounts/getActiveAccount"];
@@ -369,6 +457,7 @@ export default {
                   "The transaction is successful",
                   "success"
                 );
+                my.getAllData()
               } else {
                 my.sendErrorMsg(my, "Transaction failed!");
               }
@@ -385,7 +474,7 @@ export default {
         my.sendErrorMsg(my, "Error:Transaction failed!");
       }
     },
-    UserUnlistLimitOrder(index, row){
+    async UserUnlistLimitOrder(index, row){
       console.log(index, row);
       const my = this;
       const web3 = this.$store.getters["accounts/getWeb3"];
@@ -412,6 +501,7 @@ export default {
                   "The transaction is successful",
                   "success"
                 );
+                my.getAllData()
               } else {
                 my.sendErrorMsg(my, "Transaction failed!");
               }
@@ -447,14 +537,14 @@ export default {
               this.sendErrorMsg(this, "Error: margin amount must be positive!");
               return;
             }
-            my.IncreaseMargin(my,BasePoolContract,ActiveAccount,row.position_id,parseFloat(row.new_margin_amount));
+            my.IncreaseMargin(my,BasePoolContract,ActiveAccount,row.position_id,Math.floor(parseFloat(row.new_margin_amount*10**6)));
           } else if(type == 2) {
             console.log("descrise")
             if (parseFloat(row.new_margin_amount) <= 0) {
               this.sendErrorMsg(this, "Error: margin amount must be positive!");
               return;
             }
-            my.DecreaseMargin(my,BasePoolContract,ActiveAccount,row.position_id,parseFloat(row.new_margin_amount));
+            my.DecreaseMargin(my,BasePoolContract,ActiveAccount,row.position_id,Math.floor(parseFloat(row.new_margin_amount*10**6)));
           } else if(type == 3) {
             console.log("withdraw")
             my.RedeemMargin(my,BasePoolContract,ActiveAccount,row.position_id);
@@ -489,7 +579,8 @@ export default {
               "Success",
               "The transaction is successful",
               "success"
-            );
+            ); 
+            my.getAllData()
           } else {
             my.sendErrorMsg(my, "Transaction failed!");
           }
@@ -521,6 +612,7 @@ export default {
               "The transaction is successful",
               "success"
             );
+            my.getAllData()
           } else {
             my.sendErrorMsg(my, "Transaction failed!");
           }
@@ -551,6 +643,7 @@ export default {
               "The transaction is successful",
               "success"
             );
+            my.getAllData()
           } else {
             my.sendErrorMsg(my, "Transaction failed!");
           }
@@ -581,6 +674,7 @@ export default {
               "The transaction is successful",
               "success"
             );
+            my.getAllData()
           } else {
             my.sendErrorMsg(my, "Transaction failed!");
           }
@@ -715,6 +809,7 @@ export default {
               "The transaction is successful",
               "success"
             );
+            my.getAllData()
           } else {
             my.isLoading = false;
             my.sendErrorMsg(my, "Transaction failed!");
@@ -751,6 +846,7 @@ export default {
               "The transaction is successful",
               "success"
             );
+            my.getAllData()
           } else {
             my.isLoading = false;
             my.sendErrorMsg(my, "Transaction failed!");
@@ -787,6 +883,7 @@ export default {
               "The transaction is successful",
               "success"
             );
+            my.getAllData()
           } else {
             my.isLoading = false;
             my.sendErrorMsg(my, "Transaction failed!");
@@ -823,6 +920,7 @@ export default {
               "The transaction is successful",
               "success"
             );
+            my.getAllData()
           } else {
             my.isLoading = false;
             my.sendErrorMsg(my, "Transaction failed!");
