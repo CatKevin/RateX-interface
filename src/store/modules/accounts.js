@@ -189,6 +189,12 @@ const mutations = {
         state.contractAddress.PositionManager = Config.BSC.PositionManager
         state.contractAddress.MockERC20 = Config.BSC.MockERC20
         break;
+      case "a869":
+        state.chainName = "Avalanche Fuji Testnet";
+        state.contractAddress.BasePool = Config.Avalanche.BasePool
+        state.contractAddress.PositionManager = Config.Avalanche.PositionManager
+        state.contractAddress.MockERC20 = Config.Avalanche.MockERC20
+        break;
       case "0x539": // 1337 (often used on localhost)
       case "0x1691": // 5777 (default in Ganache)
       default:

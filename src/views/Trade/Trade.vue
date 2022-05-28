@@ -100,7 +100,7 @@
         </el-table-column>
         <el-table-column label="SwapRate" width="180">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.swap_rate/10**4 }}%</span>
+            <span style="margin-left: 10px">{{ scope.row.swap_rate/10**2 }}%</span>
           </template>
         </el-table-column>
         <el-table-column label="StartTime" width="240">
@@ -126,7 +126,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="Operate"  width="200">
+        <!-- <el-table-column label="Operate"  width="200">
           <template slot-scope="scope">
             <el-button 
               size="mini" 
@@ -135,7 +135,7 @@
               >Close</el-button
             >
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
     <div
@@ -160,7 +160,7 @@
         </el-table-column>
         <el-table-column label="SwapRate" width="100">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.swap_rate/10**4 }}%</span>
+            <span style="margin-left: 10px">{{ scope.row.swap_rate/10**2 }}%</span>
           </template>
         </el-table-column>
         <el-table-column label="StartTime" width="180">
@@ -495,7 +495,7 @@ export default {
         );
         if (BasePoolContract) {
           BasePoolContract.methods
-            .ClosePosition(row.position_id)
+            .UserUnlistLimitOrder(row.swap_rate,row.position_id,row.is_fixed_receiver)
             .send({
               from: ActiveAccount,
             })
@@ -726,7 +726,7 @@ export default {
         return;
       }
       const inputStruct = {
-        swap_rate: Math.floor(parseFloat(this.form.swapRate) * 10 ** 4),
+        swap_rate: Math.floor(parseFloat(this.form.swapRate) * 10 ** 2),
         margin_amount: Math.floor(parseFloat(this.form.MarginAmount) * 10 ** 6),
         notional_amount: Math.floor(
           parseFloat(this.form.notionalSize) * 10 ** 6
