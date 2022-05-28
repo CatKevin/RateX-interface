@@ -10,8 +10,8 @@
         "MockERC20":"0xAb0ed274201BaB22eA5B4cC839d1B42f4Fe1BE34"
     },
     "Avalanche": {
-        "BasePool": "",
-        "PositionManager":"",
-        "MockERC20":""
+        "BasePool": "0xe427F94C3E9926d4195c8645a2407500fbA28ec9",
+        "PositionManager":"0xB607ffc06b4D486b692671f86a46EA81FF8218dF",
+        "MockERC20":"0xAb0ed274201BaB22eA5B4cC839d1B42f4Fe1BE34"
     }
 }
