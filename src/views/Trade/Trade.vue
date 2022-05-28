@@ -259,7 +259,8 @@ export default {
         swapType: 0, // 0=market;1=Limit
       },
       LimitOrder:[],
-      MyPositions: [{
+      MyPositions:[],
+      MyPositions0: [{
         position_id:1,
         swap_rate: 10000,
         notional_amount: 7000000,
